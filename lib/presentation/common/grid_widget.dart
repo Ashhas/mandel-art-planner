@@ -4,7 +4,7 @@ class GridWidget extends StatefulWidget {
   const GridWidget({super.key});
 
   @override
-  _GridWidgetState createState() => _GridWidgetState();
+  State<GridWidget> createState() => _GridWidgetState();
 }
 
 class _GridWidgetState extends State<GridWidget> {

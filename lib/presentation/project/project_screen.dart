@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mandel_art_planner/presentation/common/grid_widget.dart';
 
 class ProjectScreen extends StatefulWidget {
-  const ProjectScreen({Key? key}) : super(key: key);
+  final String projectName;
+
+  const ProjectScreen({
+    required this.projectName,
+    super.key,
+  });
 
   @override
   State<ProjectScreen> createState() => _ProjectScreenState();
@@ -13,11 +18,21 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.close,
-          size: 30,
-          color: Colors.black,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.close,
+            size: 30,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
         ),
+        title: Text(
+          widget.projectName,
+          style: const TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: const [
@@ -31,7 +46,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
           ),
           SizedBox(
             width: 10,
-          )
+          ),
         ],
       ),
       backgroundColor: Colors.white,

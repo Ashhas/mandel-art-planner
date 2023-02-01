@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mandel_art_planner/presentation/common/primary_button.dart';
 import 'package:mandel_art_planner/presentation/home/widgets/project_tile.dart';
+import 'package:mandel_art_planner/presentation/project/project_screen.dart';
+import 'package:mandel_art_planner/providers.dart';
 
-class Home extends StatefulWidget {
+class Home extends ConsumerStatefulWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
+    final projectRepo = ref.watch(projectRepositoryProvider);
+
+    final projects = projectRepo.mandelProjects;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -28,7 +35,7 @@ class _HomeState extends State<Home> {
                     ),
                     PrimaryButton(
                       title: 'Mandal Example',
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -36,15 +43,27 @@ class _HomeState extends State<Home> {
             Expanded(
               child: ListView.separated(
                 padding: const EdgeInsets.all(5),
-                itemCount: 3,
+                itemCount: projects.length,
                 physics: const ClampingScrollPhysics(),
                 separatorBuilder: (BuildContext context, int index) =>
                     const SizedBox(
                   height: 10,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return const ProjectTile(
-                    projectName: 'project',
+                  return GestureDetector(
+                    child: ProjectTile(
+                      projectName: projects[index],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProjectScreen(
+                            projectName: projects[index],
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),

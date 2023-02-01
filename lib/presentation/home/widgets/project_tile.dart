@@ -19,7 +19,7 @@ class ProjectTile extends StatelessWidget {
         children: const [
           Text(
             'Goal Name',
-          )
+          ),
         ],
       ),
       tileColor: const Color(0xFFf3e5f5),
